@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar, KeyboardAvoidingView,
-  Image, TouchableWithoutFeedback, Keyboard, Animated, Easing } from 'react-native';
+  Image, TouchableWithoutFeedback, Keyboard, Animated, Easing,
+ScrollView, Dimensions } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import LottieView from 'lottie-react-native';
@@ -12,6 +13,7 @@ import GenericButton from './src/GenericButton';
 import QuestionSection from './src/QuestionSection';
 import AnswerSection from './src/AnswerSection';
 import NextButton from './src/NextButton';
+import TermsText from './src/TermsText';
 import SocialMediaIcons from './src/SocialMediaIcons';
 import { generalQuiz } from './src/data/GeneralQuiz';
 import { officerQuiz } from './src/data/OfficerQuiz';
@@ -26,20 +28,43 @@ class HomeScreen extends React.Component {
     header: null,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      xValue: new Animated.Value(0)
+    };
+  }
+
   componentWillMount() {
-    this.animatedValue = new Animated.Value(0.2);
+    this.animatedValue = new Animated.Value(-100);
   }
 
   componentDidMount() {
+    const { width, height } = Dimensions.get('window');
+
     Animated.timing(this.animatedValue, {
-      toValue: 0.9,
-      duration: 1000
+      toValue: width - 325,
+      duration: 400,
+      easing: Easing.cubic
     }).start();
+
+    Animated.timing(this.state.xValue, {
+      toValue: width - 230,
+      duration: 3000,
+      easing: Easing.linear
+    }).start(() => {
+    Animated.timing(this.state.xValue, {
+      toValue: 0,
+      duration: 3000,
+      easing: Easing.linear
+    }).start(() => { this.componentDidMount(); });
+  });
   }
 
   render() {
     const { container, titleContainer, containerButtons } = styles;
-    const animatedStyle = { opacity: this.animatedValue };
+    const animatedStyle = { left: this.animatedValue, width: 270 };
+    const imageAnimatedStyle = { left: this.state.xValue };
 
     return (
       <View style={container}>
@@ -47,7 +72,7 @@ class HomeScreen extends React.Component {
           barStyle="light-content"
         />
         <View style={titleContainer}>
-          <Animated.View style={animatedStyle}>
+          <Animated.View style={imageAnimatedStyle}>
             <Image
               source={require('./src/images/BizQuizz.png')}
               style={{ width: 240, height: 150, flex: 1 }}
@@ -79,29 +104,6 @@ class HomeScreen extends React.Component {
           </Animated.View>
         </View>
       </View>
-    );
-  }
-}
-
-class BasicExample extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      progress: new Animated.Value(0),
-    };
-  }
-
-  componentDidMount() {
-    Animated.timing(this.state.progress, {
-      toValue: 1,
-      duration: 5000,
-      easing: Easing.linear,
-    }).start();
-  }
-
-  render() {
-    return (
-      <LottieView source={require('./src/images/hyperloading.json')} progress={this.state.progress} />
     );
   }
 }
@@ -253,15 +255,15 @@ class BoardCreation extends React.Component {
     }
 
     //const randomNum = Math.floor((Math.random() * data.length) + 0);
-    var questionArr = [];
+    let questionArr = [];
 
     for (let i = 0; i <= data.length; i++) {
       questionArr.push(i);
     }
 
-    var questionOrder = [];
-    var i = data.length;
-    var j = 0;
+    let questionOrder = [];
+    let i = data.length;
+    let j = 0;
 
     while (i--) {
       j = Math.floor(Math.random() * (i + 1));
@@ -490,69 +492,64 @@ class Settings extends React.Component {
     this.setState({ showButton: !this.state.showButton });
 
   render() {
-
-    const firstText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-
     return (
-      <KeyboardAwareScrollView style={styles.welcomeScreen}>
-        <View style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
-          <Text style={{ color: '#fff', fontSize: 30 }}>Terms of Use</Text>
-        </View>
-        <View
-        style={{
-          justifyContent: 'center',
-          flexDirection: 'column',
-          alignItems: 'center',
-          paddingTop: 15 }}
+        <ScrollView
+          style={styles.welcomeScreen}
+          overScrollMode="always"
         >
-          <Text style={{ color: '#fff', fontSize: 18, textAlign: 'center' }}>{firstText}</Text>
-          <GenericButton
-            whenClicked={this.onToggleModal}
+          <View style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
+            <Text style={{ color: '#fff', fontSize: 30 }}>Terms of Use</Text>
+          </View>
+          <View
+          style={{
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
+            paddingTop: 15 }}
           >
-            Toggle
-          </GenericButton>
-          <Modal
-            isVisible={this.state.showButton}
-            hideModalContentWhileAnimating
-            animationInTiming={600}
-          >
-            <View
-              style={{
-              backgroundColor: '#fff',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              padding: 12,
-              borderRadius: 15,
-              //borderWidth: 3,
-              //borderColor: '#22a6b3'
-             }}
+            <TermsText />
+            <Modal
+              isVisible={this.state.showButton}
+              hideModalContentWhileAnimating
+              animationInTiming={600}
             >
-              <Text
+              <View
                 style={{
-                  fontSize: 36,
-                  color: '#636e72',
-                  alignSelf: 'center',
-                  paddingBottom: 15
-                }}
+                backgroundColor: '#fff',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                padding: 12,
+                borderRadius: 15,
+                //borderWidth: 3,
+                //borderColor: '#22a6b3'
+               }}
               >
-                You got 4/5 right!
-              </Text>
-              <GenericButton
-                whenClicked={this.onToggleModal}
-              >
-                Play Again
-              </GenericButton>
-              <GenericButton
-                whenClicked={() => this.props.navigation.navigate('Home')}
-              >
-                Go to Menu
-              </GenericButton>
-              <SocialMediaIcons />
-            </View>
-          </Modal>
+                <Text
+                  style={{
+                    fontSize: 36,
+                    color: '#636e72',
+                    alignSelf: 'center',
+                    paddingBottom: 15
+                  }}
+                >
+                  You got 4/5 right!
+                </Text>
+                <GenericButton
+                  whenClicked={this.onToggleModal}
+                >
+                  Play Again
+                </GenericButton>
+                <GenericButton
+                  whenClicked={() => this.props.navigation.navigate('Home')}
+                >
+                  Go to Menu
+                </GenericButton>
+                <SocialMediaIcons />
+              </View>
+            </Modal>
 
-        </View>
-      </KeyboardAwareScrollView>
+          </View>
+        </ScrollView>
     );
   }
 }
@@ -573,9 +570,6 @@ const RootStack = createStackNavigator(
     },
     Credits: {
       screen: Settings
-    },
-    BasicExample: {
-      screen: BasicExample
     }
   },
   {
@@ -599,9 +593,9 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    //flexDirection: 'column',
+    //justifyContent: 'center',
+    alignItems: 'flex-start',
     backgroundColor: '#22a6b3',
   },
   container: {
@@ -611,7 +605,7 @@ const styles = StyleSheet.create({
   containerButtons: {
     flex: 1,
     backgroundColor: '#22a6b3',
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
   },
