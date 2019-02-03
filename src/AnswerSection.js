@@ -1,49 +1,75 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Animated } from 'react-native';
 import AnswerButton from './AnswerButton';
 
 const AnswerSection = ({ answerA, answerB, answerC, answerD, whenClickedA,
   whenClickedB, whenClickedC, whenClickedD, colorA, colorB, colorC, colorD,
-  disabledA, disabledB, disabledC, disabledD }) => {
+  disabledA, disabledB, disabledC, disabledD, onPressIn1, onPressIn2,
+  onPressIn3, onPressIn4, onPressOut1, onPressOut2, onPressOut3, onPressOut4,
+  style1, style2, style3, style4 }) => {
   const { containerStyle, buttonStyle } = styles;
 
   return (
     <View style={containerStyle}>
-      <AnswerButton
-        style={buttonStyle}
-        whenClicked={whenClickedA}
-        color={colorA}
-        disabled={disabledA}
+      <Animated.View
+        style={style1}
       >
-        {answerA}
-      </AnswerButton>
+        <AnswerButton
+          style={buttonStyle}
+          whenClicked={whenClickedA}
+          color={colorA}
+          disabled={disabledA}
+          onPressIn={onPressIn1}
+          onPressOut={onPressOut1}
+        >
+          {answerA}
+        </AnswerButton>
+      </Animated.View>
 
-      <AnswerButton
-        style={buttonStyle}
-        whenClicked={whenClickedB}
-        color={colorB}
-        disabled={disabledB}
+      <Animated.View
+        style={style2}
       >
-        {answerB}
-      </AnswerButton>
+        <AnswerButton
+          style={buttonStyle}
+          whenClicked={whenClickedB}
+          color={colorB}
+          disabled={disabledB}
+          onPressIn={onPressIn2}
+          onPressOut={onPressOut2}
+        >
+          {answerB}
+        </AnswerButton>
+      </Animated.View>
 
-      <AnswerButton
-        style={buttonStyle}
-        whenClicked={whenClickedC}
-        color={colorC}
-        disabled={disabledC}
+      <Animated.View
+        style={style3}
       >
-        {answerC}
-      </AnswerButton>
+        <AnswerButton
+          style={buttonStyle}
+          whenClicked={whenClickedC}
+          color={colorC}
+          disabled={disabledC}
+          onPressIn={onPressIn3}
+          onPressOut={onPressOut3}
+        >
+          {answerC}
+        </AnswerButton>
+      </Animated.View>
 
-      <AnswerButton
-        style={buttonStyle}
-        whenClicked={whenClickedD}
-        color={colorD}
-        disabled={disabledD}
+      <Animated.View
+        style={style4}
       >
-        {answerD}
-      </AnswerButton>
+        <AnswerButton
+          style={buttonStyle}
+          whenClicked={whenClickedD}
+          color={colorD}
+          disabled={disabledD}
+          onPressIn={onPressIn4}
+          onPressOut={onPressOut4}
+        >
+          {answerD}
+        </AnswerButton>
+      </Animated.View>
     </View>
   );
 };

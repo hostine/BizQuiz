@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, TouchableOpacity, Button } from 'react-native';
 
 
-const MenuButtons = ({ whenClicked, colorButton, children }) => {
+const MenuButtons = ({ whenClicked, colorButton, children, onPressIn, onPressOut }) => {
   const styles = {
     containerStyle: {
       paddingVertical: 10,
@@ -40,6 +40,8 @@ const MenuButtons = ({ whenClicked, colorButton, children }) => {
     <View>
       <View>
         <TouchableOpacity
+          onPressIn={onPressIn}
+          onPressOut={onPressOut}
           activeOpacity={0.5}
           underlayColor='#fff'
           onPress={whenClicked}

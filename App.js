@@ -33,10 +33,15 @@ class HomeScreen extends React.Component {
     this.state = {
       xValue: new Animated.Value(0)
     };
+    //this.handlePressIn = this.handlePressIn.bind(this);
+    //this.handlePressOut = this.handlePressOut.bind(this);
   }
 
   componentWillMount() {
     this.animatedValue = new Animated.Value(-100);
+    this.buttonSize1 = new Animated.Value(1);
+    this.buttonSize2 = new Animated.Value(1);
+    this.buttonSize3 = new Animated.Value(1);
   }
 
   componentDidMount() {
@@ -49,22 +54,64 @@ class HomeScreen extends React.Component {
     }).start();
 
     Animated.timing(this.state.xValue, {
-      toValue: width - 230,
-      duration: 3000,
+      toValue: width - 310,
+      duration: 1300,
       easing: Easing.linear
-    }).start(() => {
-    Animated.timing(this.state.xValue, {
-      toValue: 0,
-      duration: 3000,
-      easing: Easing.linear
-    }).start(() => { this.componentDidMount(); });
-  });
+    }).start();
+  }
+
+  handlePressIn1() {
+    Animated.spring(this.buttonSize1, {
+      toValue: 0.5,
+    }).start();
+  }
+  handlePressOut1() {
+    Animated.spring(this.buttonSize1, {
+      toValue: 1,
+      friction: 3,
+      tension: 40
+    }).start();
+  }
+
+  handlePressIn2() {
+    Animated.spring(this.buttonSize2, {
+      toValue: 0.5,
+    }).start();
+  }
+  handlePressOut2() {
+    Animated.spring(this.buttonSize2, {
+      toValue: 1,
+      friction: 3,
+      tension: 40
+    }).start();
+  }
+
+  handlePressIn3() {
+    Animated.spring(this.buttonSize3, {
+      toValue: 0.5,
+    }).start();
+  }
+  handlePressOut3() {
+    Animated.spring(this.buttonSize3, {
+      toValue: 1,
+      friction: 3,
+      tension: 40
+    }).start();
   }
 
   render() {
     const { container, titleContainer, containerButtons } = styles;
     const animatedStyle = { left: this.animatedValue, width: 270 };
     const imageAnimatedStyle = { left: this.state.xValue };
+    const buttonScaleStyle1 = {
+      transform: [{ scale: this.buttonSize1 }]
+    };
+    const buttonScaleStyle2 = {
+      transform: [{ scale: this.buttonSize2 }]
+    };
+    const buttonScaleStyle3 = {
+      transform: [{ scale: this.buttonSize3 }]
+    };
 
     return (
       <View style={container}>
@@ -81,27 +128,50 @@ class HomeScreen extends React.Component {
           </Animated.View>
         </View>
         <View style={[containerButtons]}>
-          <Animated.View style={animatedStyle}>
-            <MenuButtons
-            whenClicked={() => this.props.navigation.navigate('Details')}
-            >
-            New Game
-            </MenuButtons>
-          </Animated.View>
-          <Animated.View style={animatedStyle}>
-            <MenuButtons
-            whenClicked={() => this.props.navigation.navigate('Credits')}
-            >
-            Settings
-            </MenuButtons>
-          </Animated.View>
-          <Animated.View style={animatedStyle}>
-            <MenuButtons
-            whenClicked={() => this.props.navigation.navigate('Details')}
-            >
-            Leaderboard
-            </MenuButtons>
-          </Animated.View>
+          <TouchableWithoutFeedback
+            onPressIn={this.handlePressIn1.bind(this)}
+            onPressOut={this.handlePressOut1.bind(this)}
+          >
+            <Animated.View style={[animatedStyle, buttonScaleStyle1]}>
+              <MenuButtons
+                onPressIn={this.handlePressIn1.bind(this)}
+                onPressOut={this.handlePressOut1.bind(this)}
+                whenClicked={() => this.props.navigation.navigate('Details')}
+              >
+              New Game
+              </MenuButtons>
+            </Animated.View>
+          </TouchableWithoutFeedback>
+
+          <TouchableWithoutFeedback
+            onPressIn={this.handlePressIn2.bind(this)}
+            onPressOut={this.handlePressOut2.bind(this)}
+          >
+            <Animated.View style={[animatedStyle, buttonScaleStyle2]}>
+              <MenuButtons
+                onPressIn={this.handlePressIn2.bind(this)}
+                onPressOut={this.handlePressOut2.bind(this)}
+                whenClicked={() => this.props.navigation.navigate('Credits')}
+              >
+              Settings
+              </MenuButtons>
+            </Animated.View>
+          </TouchableWithoutFeedback>
+
+          <TouchableWithoutFeedback
+            onPressIn={this.handlePressIn3.bind(this)}
+            onPressOut={this.handlePressOut3.bind(this)}
+          >
+            <Animated.View style={[animatedStyle, buttonScaleStyle3]}>
+              <MenuButtons
+                onPressIn={this.handlePressIn3.bind(this)}
+                onPressOut={this.handlePressOut3.bind(this)}
+                whenClicked={() => this.props.navigation.navigate('Details')}
+              >
+              Leaderboard
+              </MenuButtons>
+            </Animated.View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     );
@@ -223,7 +293,66 @@ class BoardCreation extends React.Component {
     this.state = this.setupNewBoard(0, 0, questionOrder, data);
   }
 
-  getRanOrder() {
+  componentWillMount() {
+    this.buttonSize1 = new Animated.Value(1);
+    this.buttonSize2 = new Animated.Value(1);
+    this.buttonSize3 = new Animated.Value(1);
+    this.buttonSize4 = new Animated.Value(1);
+  }
+
+  handlePressIn1() {
+    Animated.spring(this.buttonSize1, {
+      toValue: 0.5,
+    }).start();
+  }
+  handlePressOut1() {
+    Animated.spring(this.buttonSize1, {
+      toValue: 1,
+      friction: 3,
+      tension: 40
+    }).start();
+  }
+
+  handlePressIn2() {
+    Animated.spring(this.buttonSize2, {
+      toValue: 0.5,
+    }).start();
+  }
+  handlePressOut2() {
+    Animated.spring(this.buttonSize2, {
+      toValue: 1,
+      friction: 3,
+      tension: 40
+    }).start();
+  }
+
+  handlePressIn3() {
+    Animated.spring(this.buttonSize3, {
+      toValue: 0.5,
+    }).start();
+  }
+  handlePressOut3() {
+    Animated.spring(this.buttonSize3, {
+      toValue: 1,
+      friction: 3,
+      tension: 40
+    }).start();
+  }
+
+  handlePressIn4() {
+    Animated.spring(this.buttonSize4, {
+      toValue: 0.5,
+    }).start();
+  }
+  handlePressOut4() {
+    Animated.spring(this.buttonSize4, {
+      toValue: 1,
+      friction: 3,
+      tension: 40
+    }).start();
+  }
+
+  onRanOrder() {
     var nums = [0, 1, 2, 3],
     ranNums = [],
     i = nums.length,
@@ -276,7 +405,7 @@ class BoardCreation extends React.Component {
 
   setupNewBoard(initialScore, questionNum,
     questionOrder = this.state.questionOrder, data = this.state.data) {
-    const ranNums = this.getRanOrder();
+    const ranNums = this.onRanOrder();
 
 //As of here, questionOrder is now an array of random, non-repeating nums
 //[5,3,2,7,1,3,5]
@@ -393,6 +522,23 @@ class BoardCreation extends React.Component {
       textValue, nextPage, nextColor,
       colorA, colorB, colorC, colorD, disabledA,
       disabledB, disabledC, disabledD, score } = this.state;
+
+    const username = navigation.getParam('username');
+    const endText = `Congratulations ${username}! You got ${score}/5 correct`;
+
+    const buttonScaleStyle1 = {
+      transform: [{ scale: this.buttonSize1 }]
+    };
+    const buttonScaleStyle2 = {
+      transform: [{ scale: this.buttonSize2 }]
+    };
+    const buttonScaleStyle3 = {
+      transform: [{ scale: this.buttonSize3 }]
+    };
+    const buttonScaleStyle4 = {
+      transform: [{ scale: this.buttonSize4 }]
+    };
+
     return (
       <View style={styles.welcomeScreen}>
         <View style={styles.questionStyle}>
@@ -410,6 +556,18 @@ class BoardCreation extends React.Component {
             colorB={colorB}
             colorC={colorC}
             colorD={colorD}
+            style1={buttonScaleStyle1}
+            style2={buttonScaleStyle2}
+            style3={buttonScaleStyle3}
+            style4={buttonScaleStyle4}
+            onPressIn1={this.handlePressIn1.bind(this)}
+            onPressOut1={this.handlePressOut1.bind(this)}
+            onPressIn2={this.handlePressIn2.bind(this)}
+            onPressOut2={this.handlePressOut2.bind(this)}
+            onPressIn3={this.handlePressIn3.bind(this)}
+            onPressOut3={this.handlePressOut3.bind(this)}
+            onPressIn4={this.handlePressIn4.bind(this)}
+            onPressOut4={this.handlePressOut4.bind(this)}
             disabledA={this.state.disabledA}
             disabledB={disabledB}
             disabledC={disabledC}
@@ -445,13 +603,14 @@ class BoardCreation extends React.Component {
           >
             <Text
               style={{
-                fontSize: 36,
+                fontSize: 26,
                 color: '#636e72',
                 alignSelf: 'center',
-                paddingBottom: 15
+                paddingBottom: 15,
+                textAlign: 'center'
               }}
             >
-              You got {score}/5 right!
+              {endText}
             </Text>
             <GenericButton
               whenClicked={this.onToggleModal.bind(this)}
