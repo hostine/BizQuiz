@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar, KeyboardAvoidingView,
-  Image, TouchableWithoutFeedback, Keyboard, Animated, Easing,
-ScrollView, Dimensions } from 'react-native';
+  ImageBackground, TouchableWithoutFeedback, Keyboard, Animated, Easing,
+ScrollView, Dimensions, Image } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import LottieView from 'lottie-react-native';
@@ -112,12 +112,24 @@ class HomeScreen extends React.Component {
     const buttonScaleStyle3 = {
       transform: [{ scale: this.buttonSize3 }]
     };
+    const remote = 'https://s15.postimg.org/tw2qkvmcb/400px.png';
 
     return (
       <View style={container}>
         <StatusBar
           barStyle="light-content"
         />
+        <ImageBackground
+          style={{
+            backgroundColor: '#af9aff',
+            flex: 1,
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center',
+          }}
+          source={require('./src/images/background.gif')}
+        >
         <View style={titleContainer}>
           <Animated.View style={imageAnimatedStyle}>
             <Image
@@ -173,6 +185,7 @@ class HomeScreen extends React.Component {
             </Animated.View>
           </TouchableWithoutFeedback>
         </View>
+        </ImageBackground>
       </View>
     );
   }
@@ -755,7 +768,7 @@ const styles = StyleSheet.create({
     //flexDirection: 'column',
     //justifyContent: 'center',
     alignItems: 'flex-start',
-    backgroundColor: '#22a6b3',
+    //backgroundColor: '#22a6b3',
   },
   container: {
     flex: 1,
@@ -763,7 +776,7 @@ const styles = StyleSheet.create({
   },
   containerButtons: {
     flex: 1,
-    backgroundColor: '#22a6b3',
+    //backgroundColor: '#22a6b3',
     //alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
