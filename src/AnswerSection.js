@@ -80,6 +80,7 @@ const styles = {
   },
   containerStyle: {
     padding: 10,
+    //marginTop: 400
     //flex: 1,
     //backgroundColor: 'rgba(255,255,255,0.2)',
   },

@@ -7,7 +7,7 @@ const AnswerSection = () => {
   return (
     <View style={containerStyle}>
       <TouchableOpacity
-        onPress={() => Linking.openURL('Twitter://')}
+        onPress={() => Linking.openURL('https://mobile.twitter.com/')}
       >
         <Image
           source={require('./images/Twitter.png')}
@@ -16,7 +16,7 @@ const AnswerSection = () => {
         />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => Linking.openURL('instagram://')}
+        onPress={() => Linking.openURL('https://www.instagram.com/')}
       >
         <Image
           source={require('./images/Instagram.png')}
@@ -25,7 +25,7 @@ const AnswerSection = () => {
         />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => Linking.openURL('FaceBook://')}
+        onPress={() => Linking.openURL('https://m.facebook.com/')}
       >
         <Image
           source={require('./images/Facebook.png')}
@@ -34,7 +34,7 @@ const AnswerSection = () => {
         />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => Linking.openURL('Snapchat://')}
+        onPress={() => Linking.openURL('https://accounts.snapchat.com/accounts/login?continue=https%3A%2F%2Faccounts.snapchat.com%2Faccounts%2Fwelcome')}
       >
         <Image
           source={require('./images/Snapchat.png')}
@@ -52,7 +52,7 @@ const styles = {
   },
   containerStyle: {
     padding: 10,
-    paddingTop: 30,
+    paddingTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-around'
     //flex: 1,

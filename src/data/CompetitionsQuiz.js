@@ -23,6 +23,11 @@ export const competitionsQuiz = [
     answerChoices: ['Good hacking practices', 'Encryption',
     'Physical Security', 'Intrusion Discovery']
   },
+  {
+    question: 'What topic is NOT included in the Cyber Security Test?',
+    answerChoices: ['Good hacking practices', 'Encryption',
+    'Physical Security', 'Intrusion Discovery']
+  },
 ];
 
 export default {

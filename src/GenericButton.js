@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, Button } from 'react-native';
+import { Text, View, TouchableOpacity, ImageBackground } from 'react-native';
 
 
 const MenuButtons = ({ whenClicked, colorButton, children, disabled }) => {
@@ -26,10 +26,22 @@ const MenuButtons = ({ whenClicked, colorButton, children, disabled }) => {
       paddingVertical: 10,
       backgroundColor: '#22a6b3',
       marginVertical: 3,
-      marginHorizontal: 20
+      marginHorizontal: 20,
+      borderRadius: 7,
+      borderWidth: 2,
+      borderColor: '#fff'
     },
     bigContainer: {
       flex: 1,
+    },
+    imageStyle: {
+      //backgroundColor: '#af9aff',
+      position: 'absolute',
+      //justifyContent: 'center',
+      borderRadius: 15,
+      overflow: 'hidden',
+      borderWidth: 2,
+      borderColor: '#fff'
     }
   };
 
@@ -44,9 +56,7 @@ const MenuButtons = ({ whenClicked, colorButton, children, disabled }) => {
           style={styles.container}
         >
           <Text style={styles.buttonStyle}>{children}</Text>
-
         </TouchableOpacity>
-
       </View>
     </View>
   );

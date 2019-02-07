@@ -38,7 +38,9 @@ class HomeScreen extends React.Component {
   }
 
   componentWillMount() {
-    this.animatedValue = new Animated.Value(-100);
+    this.animatedValue1 = new Animated.Value(-100);
+    this.animatedValue2 = new Animated.Value(-100);
+    this.animatedValue3 = new Animated.Value(-100);
     this.buttonSize1 = new Animated.Value(1);
     this.buttonSize2 = new Animated.Value(1);
     this.buttonSize3 = new Animated.Value(1);
@@ -47,11 +49,23 @@ class HomeScreen extends React.Component {
   componentDidMount() {
     const { width, height } = Dimensions.get('window');
 
-    Animated.timing(this.animatedValue, {
-      toValue: width - 325,
-      duration: 400,
-      easing: Easing.cubic
-    }).start();
+    Animated.stagger(300, [
+      Animated.timing(this.animatedValue1, {
+        toValue: width - 325,
+        duration: 400,
+        easing: Easing.cubic
+      }),
+      Animated.timing(this.animatedValue2, {
+        toValue: width - 325,
+        duration: 400,
+        easing: Easing.cubic
+      }),
+      Animated.timing(this.animatedValue3, {
+        toValue: width - 325,
+        duration: 400,
+        easing: Easing.cubic
+      })
+    ]).start();
 
     Animated.timing(this.state.xValue, {
       toValue: width - 310,
@@ -101,7 +115,9 @@ class HomeScreen extends React.Component {
 
   render() {
     const { container, titleContainer, containerButtons } = styles;
-    const animatedStyle = { left: this.animatedValue, width: 270 };
+    const animatedStyle1 = { left: this.animatedValue1, width: 270 };
+    const animatedStyle2 = { left: this.animatedValue2, width: 270 };
+    const animatedStyle3 = { left: this.animatedValue3, width: 270 };
     const imageAnimatedStyle = { left: this.state.xValue };
     const buttonScaleStyle1 = {
       transform: [{ scale: this.buttonSize1 }]
@@ -144,7 +160,7 @@ class HomeScreen extends React.Component {
             onPressIn={this.handlePressIn1.bind(this)}
             onPressOut={this.handlePressOut1.bind(this)}
           >
-            <Animated.View style={[animatedStyle, buttonScaleStyle1]}>
+            <Animated.View style={[animatedStyle1, buttonScaleStyle1]}>
               <MenuButtons
                 onPressIn={this.handlePressIn1.bind(this)}
                 onPressOut={this.handlePressOut1.bind(this)}
@@ -159,7 +175,7 @@ class HomeScreen extends React.Component {
             onPressIn={this.handlePressIn2.bind(this)}
             onPressOut={this.handlePressOut2.bind(this)}
           >
-            <Animated.View style={[animatedStyle, buttonScaleStyle2]}>
+            <Animated.View style={[animatedStyle2, buttonScaleStyle2]}>
               <MenuButtons
                 onPressIn={this.handlePressIn2.bind(this)}
                 onPressOut={this.handlePressOut2.bind(this)}
@@ -174,7 +190,7 @@ class HomeScreen extends React.Component {
             onPressIn={this.handlePressIn3.bind(this)}
             onPressOut={this.handlePressOut3.bind(this)}
           >
-            <Animated.View style={[animatedStyle, buttonScaleStyle3]}>
+            <Animated.View style={[animatedStyle3, buttonScaleStyle3]}>
               <MenuButtons
                 onPressIn={this.handlePressIn3.bind(this)}
                 onPressOut={this.handlePressOut3.bind(this)}
@@ -207,7 +223,7 @@ class DetailsScreen extends React.Component {
   };
 
   //List of states
-  state = { username: '', boardType: '' };
+  state = { username: '', boardType: '', error: '' };
   //All possible functions
   onButtonPress() {
     const { username, boardType } = this.state;
@@ -218,7 +234,9 @@ class DetailsScreen extends React.Component {
         username: username,
       });
     } else {
-      const errorText = <Text>Please enter your name</Text>;
+      this.setState({
+        error: 'Please enter your name and the quiz you wish to play'
+      });
     }
   }
 
@@ -250,7 +268,7 @@ class DetailsScreen extends React.Component {
             barStyle="light-content"
           />
           <InputName
-            placeHolder="player name"
+            placeHolder="player name..."
             returnKeyType="next"
             keyboardType="default"
             capitalize="words"
@@ -275,6 +293,13 @@ class DetailsScreen extends React.Component {
               overlayStyle={overlayStyle}
               onChangeText={boardType => this.setState({ boardType })}
             />
+
+            <Text
+              style={{ color: '#ff6b81', textAlign: 'center', fontSize: 20, paddingBottom: 20 }}
+            >
+              {this.state.error}
+            </Text>
+
           <GenericButton
             whenClicked={this.onButtonPress.bind(this)}
           >
@@ -296,7 +321,12 @@ class BoardCreation extends React.Component {
     headerTintColor: '#fff',
     headerStyle: {
       backgroundColor: '#22a6b3',
-    }
+      //position: 'absolute',
+      //backgroundColor: 'transparent',
+      borderBottomWidth: 0,
+      //paddingBottom: 15,
+      //paddingBottom: 15
+    },
 
   };
 
@@ -553,7 +583,20 @@ class BoardCreation extends React.Component {
     };
 
     return (
-      <View style={styles.welcomeScreen}>
+      <View style={{ flex: 1 }}>
+      <ImageBackground
+        style={{
+          backgroundColor: '#cc6b8e',
+          flex: 1,
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+        }}
+        resizeMode='cover'
+        source={require('./src/images/questionskeep2.gif')}
+      >
+        <View style={{ height: 10 }} />
         <View style={styles.questionStyle}>
           <QuestionSection>
             {textValue}
@@ -635,9 +678,13 @@ class BoardCreation extends React.Component {
             >
               Go to Menu
             </GenericButton>
+            <Text style={{ textAlign: 'center', fontSize: 14, color: '#aaa', paddingTop: 10 }}>
+              Share your score:
+            </Text>
             <SocialMediaIcons />
           </View>
         </Modal>
+        </ImageBackground>
       </View>
     );
   }
@@ -719,7 +766,7 @@ class Settings extends React.Component {
                 <SocialMediaIcons />
               </View>
             </Modal>
-
+            <View style={{ height: 20 }} />
           </View>
         </ScrollView>
     );
