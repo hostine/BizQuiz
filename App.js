@@ -586,7 +586,7 @@ class BoardCreation extends React.Component {
       <View style={{ flex: 1 }}>
       <ImageBackground
         style={{
-          backgroundColor: '#cc6b8e',
+          backgroundColor: '#af9aff',
           flex: 1,
           position: 'absolute',
           width: '100%',

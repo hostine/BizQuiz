@@ -24,11 +24,28 @@ export const competitionsQuiz = [
     'Physical Security', 'Intrusion Discovery']
   },
   {
-    question: 'What topic is NOT included in the Cyber Security Test?',
-    answerChoices: ['Good hacking practices', 'Encryption',
-    'Physical Security', 'Intrusion Discovery']
+    question: 'How many members can typically be on a team in a team event?',
+    answerChoices: ['3', '5', '2', '4']
+  },
+  {
+    question: 'What type of competition is the American Enterprise Project?',
+    answerChoices: ['Chapter', 'Individual', 'Team', 'None of the above']
+  },
+  {
+    question: 'How many members can typically be on a team in a team event?',
+    answerChoices: ['3', '5', '2', '4']
+  },
+  {
+    question: 'Which competition does Website design start at?',
+    answerChoices: ['Regions', 'State', 'National', 'International']
+  },
+  {
+    question: 'Which pairing is correct for the Journalism competition?',
+    answerChoices: ['Individual, Test', 'Team, Test', 'Individual, Project', 'Individual, Test']
   },
 ];
+
+//10
 
 export default {
     competitionsQuiz

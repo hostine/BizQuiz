@@ -32,7 +32,18 @@ export const historyQuiz = [
     answerChoices: ['An individual FBLA club', 'A section of the FBLA handbook',
     'A state of FBLA', 'The FBLA handbook']
   },
+  {
+    question: 'In absence of the president and vice president, who calls meetings to order?',
+    answerChoices: ['Secretary', 'Treasurer', 'The oldest person', 'Parliamentarian']
+  },
+  {
+    question: 'How is FBLA-PBL funded??',
+    answerChoices: ['Membership dues', 'Selling FBLA projects',
+    'Fundraising', 'Printing money']
+  },
 ];
+
+//10
 
 export default {
     historyQuiz

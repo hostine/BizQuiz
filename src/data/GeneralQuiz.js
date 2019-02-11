@@ -34,7 +34,21 @@ export const generalQuiz = [
     question: 'How many chapter points do Gold chapters need?',
     answerChoices: ['1200+', '800+', '2000+', '500+']
   },
+  {
+    question: 'What month is FBLA Week held in?',
+    answerChoices: ['February', 'March', 'August', 'September']
+  },
+  {
+    question: 'When is American Enterprise Day?',
+    answerChoices: ['November 15th', 'February 1st', 'December 15th', 'January 23rd']
+  },
+  {
+    question: 'WHo was the first executive director of FBLA-PBL?',
+    answerChoices: ['Dr. Edward Miller', 'Monty Rhodes+', 'Dr. Bradley Cooper', 'Harrison Bell']
+  },
 ];
+
+//11
 
 export default {
     generalQuiz
