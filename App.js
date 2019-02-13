@@ -15,6 +15,7 @@ import AnswerSection from './src/AnswerSection';
 import NextButton from './src/NextButton';
 import TermsText from './src/TermsText';
 import SocialMediaIcons from './src/SocialMediaIcons';
+import FeedbackForm from './src/FeedbackForm';
 import { generalQuiz } from './src/data/GeneralQuiz';
 import { officerQuiz } from './src/data/OfficerQuiz';
 import { skillsQuiz } from './src/data/SkillsQuiz';
@@ -22,6 +23,7 @@ import { competitionsQuiz } from './src/data/CompetitionsQuiz';
 import { historyQuiz } from './src/data/HistoryQuiz';
 
 
+//The opening screen with all the options
 class HomeScreen extends React.Component {
 
   static navigationOptions = {
@@ -181,7 +183,7 @@ class HomeScreen extends React.Component {
                 onPressOut={this.handlePressOut2.bind(this)}
                 whenClicked={() => this.props.navigation.navigate('Credits')}
               >
-              Settings
+              Licenses
               </MenuButtons>
             </Animated.View>
           </TouchableWithoutFeedback>
@@ -194,9 +196,9 @@ class HomeScreen extends React.Component {
               <MenuButtons
                 onPressIn={this.handlePressIn3.bind(this)}
                 onPressOut={this.handlePressOut3.bind(this)}
-                whenClicked={() => this.props.navigation.navigate('Details')}
+                whenClicked={() => this.props.navigation.navigate('Feedback')}
               >
-              Leaderboard
+              Feedback
               </MenuButtons>
             </Animated.View>
           </TouchableWithoutFeedback>
@@ -207,6 +209,7 @@ class HomeScreen extends React.Component {
   }
 }
 
+//The screen where user types in name and the quiz category
 class DetailsScreen extends React.Component {
 
   //Navigation Options
@@ -311,6 +314,7 @@ class DetailsScreen extends React.Component {
   }
 }
 
+//The screen with the actual trivia questions
 class BoardCreation extends React.Component {
 
   static navigationOptions = {
@@ -773,6 +777,43 @@ class Settings extends React.Component {
   }
 }
 
+class Feedback extends React.Component {
+
+  static navigationOptions = {
+    title: 'Feedback',
+    headerTitleStyle: {
+      fontSize: 22,
+    },
+    headerTintColor: '#fff',
+    headerStyle: {
+      backgroundColor: '#22a6b3',
+    }
+
+  };
+
+  //List of states
+  state = { changeText: '' };
+
+  changeText() {
+    this.setState({
+      changeText: 'You have successfully submitted your feedback!'
+    });
+  }
+
+  render() {
+    return (
+        <View
+          style={styles.welcomeScreen}
+        >
+          <FeedbackForm
+            whenClicked={this.changeText.bind(this)}
+            submitText={this.state.changeText}
+          />
+        </View>
+    );
+  }
+}
+
 const RootStack = createStackNavigator(
   {
     Home: {
@@ -789,6 +830,9 @@ const RootStack = createStackNavigator(
     },
     Credits: {
       screen: Settings
+    },
+    Feedback: {
+      screen: Feedback
     }
   },
   {
