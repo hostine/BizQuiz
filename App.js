@@ -728,48 +728,12 @@ class Settings extends React.Component {
             justifyContent: 'center',
             flexDirection: 'column',
             alignItems: 'center',
-            paddingTop: 15 }}
+            paddingTop: 15,
+            paddingHorizontal: 10
+          }}
           >
             <TermsText />
-            <Modal
-              isVisible={this.state.showButton}
-              hideModalContentWhileAnimating
-              animationInTiming={600}
-            >
-              <View
-                style={{
-                backgroundColor: '#fff',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                padding: 12,
-                borderRadius: 15,
-                //borderWidth: 3,
-                //borderColor: '#22a6b3'
-               }}
-              >
-                <Text
-                  style={{
-                    fontSize: 36,
-                    color: '#636e72',
-                    alignSelf: 'center',
-                    paddingBottom: 15
-                  }}
-                >
-                  You got 4/5 right!
-                </Text>
-                <GenericButton
-                  whenClicked={this.onToggleModal}
-                >
-                  Play Again
-                </GenericButton>
-                <GenericButton
-                  whenClicked={() => this.props.navigation.navigate('Home')}
-                >
-                  Go to Menu
-                </GenericButton>
-                <SocialMediaIcons />
-              </View>
-            </Modal>
+
             <View style={{ height: 20 }} />
           </View>
         </ScrollView>
@@ -791,6 +755,11 @@ class Feedback extends React.Component {
 
   };
 
+  constructor(props) {
+    super(props);
+    this.state = { text: 'Placeholder' };
+  }
+
   //List of states
   state = { changeText: '' };
 
@@ -800,15 +769,43 @@ class Feedback extends React.Component {
     });
   }
 
+  submitButton() {
+    this.props.witeText(this.state.text);
+
+    this.setState({
+      text: 'heyo'
+    });
+  }
+
   render() {
     return (
         <View
           style={styles.welcomeScreen}
         >
-          <FeedbackForm
-            whenClicked={this.changeText.bind(this)}
-            submitText={this.state.changeText}
-          />
+          <View style={{ alignItems: 'center' }}>
+            <Text
+              style={{ color: '#fff', fontSize: 18 }}
+            >
+              Please provide us any questions, concerns, or suggestions below:
+            </Text>
+          </View>
+          <View>
+            <InputName
+              placeHolder="Feedback here..."
+              returnKeyType="next"
+              keyboardType="default"
+              onChangeText={(text) => this.setState({ text })}
+              value={this.state.text}
+            />
+          </View>
+          <GenericButton
+            onPress={this.submitButton.bind(this)}
+          >
+            Submit Feedback
+          </GenericButton>
+          <Text>
+            {}
+          </Text>
         </View>
     );
   }
