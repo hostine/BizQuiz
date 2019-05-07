@@ -7,7 +7,7 @@ const AnswerSection = () => {
   return (
     <View style={containerStyle}>
       <TouchableOpacity
-        onPress={() => Linking.openURL('https://mobile.twitter.com/')}
+        onPress={() => Linking.openURL('http://twitter.com/home?status=This%20an%20example%20of%20a%20pre-written%20tweet%20-%20don%27t%20forget%20it%20needs%20to%20be%20less%20than%20280%20characters….%20Find%20out%20how%20you%20build%20them%20yourself%20here!%20http%3A%2F%2Fbit.ly%2F2SEQId8″ target=”_blank')}
       >
         <Image
           source={require('./images/Twitter.png')}

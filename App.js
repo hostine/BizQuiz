@@ -16,6 +16,7 @@ import NextButton from './src/NextButton';
 import TermsText from './src/TermsText';
 import SocialMediaIcons from './src/SocialMediaIcons';
 import FeedbackForm from './src/FeedbackForm';
+import ChangeText from './src/ChangeText';
 import { generalQuiz } from './src/data/GeneralQuiz';
 import { officerQuiz } from './src/data/OfficerQuiz';
 import { skillsQuiz } from './src/data/SkillsQuiz';
@@ -30,52 +31,13 @@ class HomeScreen extends React.Component {
     header: null,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      xValue: new Animated.Value(0)
-    };
-    //this.handlePressIn = this.handlePressIn.bind(this);
-    //this.handlePressOut = this.handlePressOut.bind(this);
-  }
-
   componentWillMount() {
-    this.animatedValue1 = new Animated.Value(-100);
-    this.animatedValue2 = new Animated.Value(-100);
-    this.animatedValue3 = new Animated.Value(-100);
     this.buttonSize1 = new Animated.Value(1);
     this.buttonSize2 = new Animated.Value(1);
     this.buttonSize3 = new Animated.Value(1);
   }
 
-  componentDidMount() {
-    const { width, height } = Dimensions.get('window');
-
-    Animated.stagger(300, [
-      Animated.timing(this.animatedValue1, {
-        toValue: width - 325,
-        duration: 400,
-        easing: Easing.cubic
-      }),
-      Animated.timing(this.animatedValue2, {
-        toValue: width - 325,
-        duration: 400,
-        easing: Easing.cubic
-      }),
-      Animated.timing(this.animatedValue3, {
-        toValue: width - 325,
-        duration: 400,
-        easing: Easing.cubic
-      })
-    ]).start();
-
-    Animated.timing(this.state.xValue, {
-      toValue: width - 310,
-      duration: 1300,
-      easing: Easing.linear
-    }).start();
-  }
-
+//All of these are separate so that each button shrinks individually
   handlePressIn1() {
     Animated.spring(this.buttonSize1, {
       toValue: 0.5,
@@ -102,25 +64,23 @@ class HomeScreen extends React.Component {
     }).start();
   }
 
-  handlePressIn3() {
-    Animated.spring(this.buttonSize3, {
-      toValue: 0.5,
-    }).start();
-  }
-  handlePressOut3() {
-    Animated.spring(this.buttonSize3, {
-      toValue: 1,
-      friction: 3,
-      tension: 40
-    }).start();
-  }
+    handlePressIn3() {
+      Animated.spring(this.buttonSize3, {
+        toValue: 0.5,
+      }).start();
+    }
+    handlePressOut3() {
+      Animated.spring(this.buttonSize3, {
+        toValue: 1,
+        friction: 3,
+        tension: 40
+      }).start();
+    }
 
   render() {
     const { container, titleContainer, containerButtons } = styles;
-    const animatedStyle1 = { left: this.animatedValue1, width: 270 };
-    const animatedStyle2 = { left: this.animatedValue2, width: 270 };
-    const animatedStyle3 = { left: this.animatedValue3, width: 270 };
-    const imageAnimatedStyle = { left: this.state.xValue };
+    const animatedStyle = { alignSelf: 'center', width: 270 };
+    const imageAnimatedStyle = { alignSelf: 'center', };
     const buttonScaleStyle1 = {
       transform: [{ scale: this.buttonSize1 }]
     };
@@ -130,7 +90,6 @@ class HomeScreen extends React.Component {
     const buttonScaleStyle3 = {
       transform: [{ scale: this.buttonSize3 }]
     };
-    const remote = 'https://s15.postimg.org/tw2qkvmcb/400px.png';
 
     return (
       <View style={container}>
@@ -162,7 +121,7 @@ class HomeScreen extends React.Component {
             onPressIn={this.handlePressIn1.bind(this)}
             onPressOut={this.handlePressOut1.bind(this)}
           >
-            <Animated.View style={[animatedStyle1, buttonScaleStyle1]}>
+            <Animated.View style={[animatedStyle, buttonScaleStyle1]}>
               <MenuButtons
                 onPressIn={this.handlePressIn1.bind(this)}
                 onPressOut={this.handlePressOut1.bind(this)}
@@ -177,7 +136,7 @@ class HomeScreen extends React.Component {
             onPressIn={this.handlePressIn2.bind(this)}
             onPressOut={this.handlePressOut2.bind(this)}
           >
-            <Animated.View style={[animatedStyle2, buttonScaleStyle2]}>
+            <Animated.View style={[animatedStyle, buttonScaleStyle2]}>
               <MenuButtons
                 onPressIn={this.handlePressIn2.bind(this)}
                 onPressOut={this.handlePressOut2.bind(this)}
@@ -192,7 +151,7 @@ class HomeScreen extends React.Component {
             onPressIn={this.handlePressIn3.bind(this)}
             onPressOut={this.handlePressOut3.bind(this)}
           >
-            <Animated.View style={[animatedStyle3, buttonScaleStyle3]}>
+            <Animated.View style={[animatedStyle, buttonScaleStyle3]}>
               <MenuButtons
                 onPressIn={this.handlePressIn3.bind(this)}
                 onPressOut={this.handlePressOut3.bind(this)}
@@ -233,8 +192,8 @@ class DetailsScreen extends React.Component {
     const user = username;
     if (user.length > 0 && boardType !== '') {
       this.props.navigation.navigate('BoardCreation', {
-        boardType: boardType,
-        username: username,
+        boardType,
+        username,
       });
     } else {
       this.setState({
@@ -247,6 +206,7 @@ class DetailsScreen extends React.Component {
   render() {
     const { welcomeScreen, containerStyle, pickerStyle, itemTextStyle, overlayStyle } = styles;
 
+//These are the options that the user can choose for their quiz
     const data = [{
       value: 'General Knowledge',
     }, {
@@ -314,7 +274,7 @@ class DetailsScreen extends React.Component {
   }
 }
 
-//The screen with the actual trivia questions
+//The screen with the actual trivia questions, most complex class
 class BoardCreation extends React.Component {
 
   static navigationOptions = {
@@ -417,6 +377,8 @@ class BoardCreation extends React.Component {
   onRanQuestion() {
     const { navigation } = this.props;
     const boardType = navigation.getParam('boardType');
+    //Pulls information from dropdown on previous next page
+    //and determines which quiz was selected
     let data;
     if (boardType === 'General Knowledge') {
       data = generalQuiz;
@@ -430,8 +392,7 @@ class BoardCreation extends React.Component {
       data = historyQuiz;
     }
 
-    //const randomNum = Math.floor((Math.random() * data.length) + 0);
-    let questionArr = [];
+    const questionArr = [];
 
     for (let i = 0; i <= data.length; i++) {
       questionArr.push(i);
@@ -455,10 +416,11 @@ class BoardCreation extends React.Component {
     const ranNums = this.onRanOrder();
 
 //As of here, questionOrder is now an array of random, non-repeating nums
-//[5,3,2,7,1,3,5]
+//so that questions are not repeated
       const dataStuff = data[questionOrder[questionNum]];
       const questions = data[questionOrder[questionNum]].answerChoices;
 
+//Checks if user has answered 5 questions, if so game is over
       let isModalShown;
       if (questionNum > 4) {
         isModalShown = true;
@@ -493,6 +455,7 @@ class BoardCreation extends React.Component {
 }
 
   onClickedA() {
+//checks the answer of A
     const { currentA, correctAnswer } = this.state;
     this.setState({ nextColor: '#1289A7',
       disabledA: true,
@@ -508,6 +471,7 @@ class BoardCreation extends React.Component {
   }
 
   onClickedB() {
+//checks the answer of B
     const { currentB, correctAnswer } = this.state;
     this.setState({ nextColor: '#1289A7',
       disabledA: true,
@@ -523,6 +487,7 @@ class BoardCreation extends React.Component {
   }
 
   onClickedC() {
+//checks the answer of C
     const { currentC, correctAnswer } = this.state;
     this.setState({ nextColor: '#1289A7',
       disabledA: true,
@@ -538,6 +503,7 @@ class BoardCreation extends React.Component {
   }
 
   onClickedD() {
+//checks the answer of D
     const { currentD, correctAnswer } = this.state;
     this.setState({ nextColor: '#1289A7',
       disabledA: true,
@@ -553,6 +519,7 @@ class BoardCreation extends React.Component {
   }
 
   onNextButton() {
+    //questionNumber increments every time the user goes to the next question
     if (this.state.nextPage) {
       this.setState(this.setupNewBoard(this.state.score, this.state.questionNumber + 1));
     }
@@ -642,7 +609,7 @@ class BoardCreation extends React.Component {
             disabled={!nextPage}
             color={nextColor}
           >
-            Next Page
+            Next Question
           </NextButton>
         </View>
         <Modal
