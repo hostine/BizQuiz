@@ -35,6 +35,7 @@ class HomeScreen extends React.Component {
     this.buttonSize1 = new Animated.Value(1);
     this.buttonSize2 = new Animated.Value(1);
     this.buttonSize3 = new Animated.Value(1);
+    this.buttonSize4 = new Animated.Value(1);
   }
 
 //All of these are separate so that each button shrinks individually
@@ -76,6 +77,18 @@ class HomeScreen extends React.Component {
         tension: 40
       }).start();
     }
+    handlePressIn4() {
+      Animated.spring(this.buttonSize4, {
+        toValue: 0.5,
+      }).start();
+    }
+    handlePressOut4() {
+      Animated.spring(this.buttonSize4, {
+        toValue: 1,
+        friction: 3,
+        tension: 40
+      }).start();
+    }
 
   render() {
     const { container, titleContainer, containerButtons } = styles;
@@ -89,6 +102,9 @@ class HomeScreen extends React.Component {
     };
     const buttonScaleStyle3 = {
       transform: [{ scale: this.buttonSize3 }]
+    };
+    const buttonScaleStyle4 = {
+      transform: [{ scale: this.buttonSize4 }]
     };
 
     return (
@@ -158,6 +174,21 @@ class HomeScreen extends React.Component {
                 whenClicked={() => this.props.navigation.navigate('Feedback')}
               >
               Feedback
+              </MenuButtons>
+            </Animated.View>
+          </TouchableWithoutFeedback>
+
+          <TouchableWithoutFeedback
+            onPressIn={this.handlePressIn3.bind(this)}
+            onPressOut={this.handlePressOut3.bind(this)}
+          >
+            <Animated.View style={[animatedStyle, buttonScaleStyle4]}>
+              <MenuButtons
+                onPressIn={this.handlePressIn4.bind(this)}
+                onPressOut={this.handlePressOut4.bind(this)}
+                whenClicked={() => this.props.navigation.navigate('Feedback')}
+              >
+              Directions
               </MenuButtons>
             </Animated.View>
           </TouchableWithoutFeedback>
@@ -624,8 +655,6 @@ class BoardCreation extends React.Component {
             justifyContent: 'center',
             padding: 12,
             borderRadius: 15,
-            //borderWidth: 3,
-            //borderColor: '#22a6b3'
            }}
           >
             <Text
