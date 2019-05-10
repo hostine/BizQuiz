@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, TextInput } from 'react-native';
+import { Image, TextInput } from 'react-native';
 
 class AllBooks extends Component {
 

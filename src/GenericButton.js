@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, ImageBackground } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 
 const MenuButtons = ({ whenClicked, colorButton, children, disabled }) => {
