@@ -25,11 +25,7 @@ class BoardCreation extends React.Component {
     headerTintColor: '#fff',
     headerStyle: {
       backgroundColor: '#22a6b3',
-      //position: 'absolute',
-      //backgroundColor: 'transparent',
       borderBottomWidth: 0,
-      //paddingBottom: 15,
-      //paddingBottom: 15
     },
 
   };

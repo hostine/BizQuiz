@@ -12,79 +12,44 @@ class HomeScreen extends React.Component {
   };
 
   componentWillMount() {
-    this.buttonSize1 = new Animated.Value(1);
-    this.buttonSize2 = new Animated.Value(1);
-    this.buttonSize3 = new Animated.Value(1);
-    this.buttonSize4 = new Animated.Value(1);
+    this.buttonSize = [];
+    for (let i = 0; i < 4; i++) {
+      this.buttonSize.push(new Animated.Value(1));
+    }
   }
 
-//All of these are separate so that each button shrinks individually
-  handlePressIn1() {
-    Animated.spring(this.buttonSize1, {
+  handlePressIn(buttonNum) {
+    Animated.spring(this.buttonSize[buttonNum], {
       toValue: 0.5,
     }).start();
   }
-  handlePressOut1() {
-    Animated.spring(this.buttonSize1, {
+  handlePressOut(buttonNum) {
+    Animated.spring(this.buttonSize[buttonNum], {
       toValue: 1,
       friction: 3,
       tension: 40
     }).start();
   }
-
-  handlePressIn2() {
-    Animated.spring(this.buttonSize2, {
-      toValue: 0.5,
-    }).start();
-  }
-  handlePressOut2() {
-    Animated.spring(this.buttonSize2, {
-      toValue: 1,
-      friction: 3,
-      tension: 40
-    }).start();
-  }
-
-    handlePressIn3() {
-      Animated.spring(this.buttonSize3, {
-        toValue: 0.5,
-      }).start();
-    }
-    handlePressOut3() {
-      Animated.spring(this.buttonSize3, {
-        toValue: 1,
-        friction: 3,
-        tension: 40
-      }).start();
-    }
-    handlePressIn4() {
-      Animated.spring(this.buttonSize4, {
-        toValue: 0.5,
-      }).start();
-    }
-    handlePressOut4() {
-      Animated.spring(this.buttonSize4, {
-        toValue: 1,
-        friction: 3,
-        tension: 40
-      }).start();
-    }
 
   render() {
     const { container, titleContainer, containerButtons } = styles;
-    const animatedStyle = { alignSelf: 'center', width: 270 };
     const imageAnimatedStyle = { alignSelf: 'center', };
-    const buttonScaleStyle1 = {
-      transform: [{ scale: this.buttonSize1 }]
-    };
-    const buttonScaleStyle2 = {
-      transform: [{ scale: this.buttonSize2 }]
-    };
-    const buttonScaleStyle3 = {
-      transform: [{ scale: this.buttonSize3 }]
-    };
-    const buttonScaleStyle4 = {
-      transform: [{ scale: this.buttonSize4 }]
+    const labels = ['New Game', 'Licenses', 'Feedback', 'Directions'];
+    const destinations = ['Details', 'Credits', 'Feedback', 'Feedback']
+    const renderButton = (num) => {
+      return (
+        <TouchableWithoutFeedback>
+          <Animated.View style={{ alignSelf: 'center', width: 270, transform: [{ scale: this.buttonSize[num] }] }}>
+            <MenuButtons
+              onPressIn={() => this.handlePressIn(num)}
+              onPressOut={() => this.handlePressOut(num)}
+              whenClicked={() => this.props.navigation.navigate(destinations[num])}
+            >
+            {labels[num]}
+            </MenuButtons>
+          </Animated.View>
+        </TouchableWithoutFeedback>
+      );
     };
 
     return (
@@ -113,65 +78,10 @@ class HomeScreen extends React.Component {
           </Animated.View>
         </View>
         <View style={[containerButtons]}>
-          <TouchableWithoutFeedback
-            onPressIn={this.handlePressIn1.bind(this)}
-            onPressOut={this.handlePressOut1.bind(this)}
-          >
-            <Animated.View style={[animatedStyle, buttonScaleStyle1]}>
-              <MenuButtons
-                onPressIn={this.handlePressIn1.bind(this)}
-                onPressOut={this.handlePressOut1.bind(this)}
-                whenClicked={() => this.props.navigation.navigate('Details')}
-              >
-              New Game
-              </MenuButtons>
-            </Animated.View>
-          </TouchableWithoutFeedback>
-
-          <TouchableWithoutFeedback
-            onPressIn={this.handlePressIn2.bind(this)}
-            onPressOut={this.handlePressOut2.bind(this)}
-          >
-            <Animated.View style={[animatedStyle, buttonScaleStyle2]}>
-              <MenuButtons
-                onPressIn={this.handlePressIn2.bind(this)}
-                onPressOut={this.handlePressOut2.bind(this)}
-                whenClicked={() => this.props.navigation.navigate('Credits')}
-              >
-              Licenses
-              </MenuButtons>
-            </Animated.View>
-          </TouchableWithoutFeedback>
-
-          <TouchableWithoutFeedback
-            onPressIn={this.handlePressIn3.bind(this)}
-            onPressOut={this.handlePressOut3.bind(this)}
-          >
-            <Animated.View style={[animatedStyle, buttonScaleStyle3]}>
-              <MenuButtons
-                onPressIn={this.handlePressIn3.bind(this)}
-                onPressOut={this.handlePressOut3.bind(this)}
-                whenClicked={() => this.props.navigation.navigate('Feedback')}
-              >
-              Feedback
-              </MenuButtons>
-            </Animated.View>
-          </TouchableWithoutFeedback>
-
-          <TouchableWithoutFeedback
-            onPressIn={this.handlePressIn3.bind(this)}
-            onPressOut={this.handlePressOut3.bind(this)}
-          >
-            <Animated.View style={[animatedStyle, buttonScaleStyle4]}>
-              <MenuButtons
-                onPressIn={this.handlePressIn4.bind(this)}
-                onPressOut={this.handlePressOut4.bind(this)}
-                whenClicked={() => this.props.navigation.navigate('Feedback')}
-              >
-              Directions
-              </MenuButtons>
-            </Animated.View>
-          </TouchableWithoutFeedback>
+          {renderButton(0)}
+          {renderButton(1)}
+          {renderButton(2)}
+          {renderButton(3)}
         </View>
         </ImageBackground>
       </View>
